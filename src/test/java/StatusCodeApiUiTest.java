@@ -1,7 +1,20 @@
-import com.microsoft.playwright.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.microsoft.playwright.APIRequest;
+import com.microsoft.playwright.APIRequestContext;
+import com.microsoft.playwright.APIResponse;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Response;
 
 public class StatusCodeApiUiTest {
     private Playwright playwright;
@@ -22,7 +35,7 @@ public class StatusCodeApiUiTest {
         // Настройка браузера
         browser = playwright.chromium().launch(
                 new BrowserType.LaunchOptions()
-                        .setHeadless(false)
+                        .setHeadless(true)
         );
 
         page = browser.newPage();
