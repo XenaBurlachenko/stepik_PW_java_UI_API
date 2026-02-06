@@ -1,8 +1,6 @@
 name: Test
 
-on:
-  push:
-    branches: [ main ]
+on: [ push ]
 
 jobs:
   test:
@@ -19,25 +17,17 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
-    - name: Build project
-      run: mvn compile test-compile
-    
-    - name: Install Playwright
+    - name: Build and Run Tests
       run: |
-        # Устанавливаем Playwright и браузеры
-        mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install" -q
-        mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install-deps" -q
-    
-    - name: Run tests
-      run: mvn test -Dtest=StatusCodeApiUiTest -Dheadless=true
-      continue-on-error: true
+        mvn clean compile
+        
+        mvn dependency:resolve
+        
+        mvn test -Dtest=StatusCodeApiUiTest -Dheadless=true
     
     - name: Upload test reports
-      uses: actions/upload-artifact@v4
       if: always()
+      uses: actions/upload-artifact@v4
       with:
-        name: TestReports
-        path: |
-          target/surefire-reports/
-          target/failsafe-reports/
-        retention-days: 14
+        name: Test-Reports
+        path: target/surefire-reports/
