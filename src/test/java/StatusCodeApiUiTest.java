@@ -22,7 +22,7 @@ import com.microsoft.playwright.Response;
 
 import config.EnvConfig;
 
-public class StatusCodeCombinedTest {
+public class StatusCodeApiUiTest {
     private Playwright playwright;
     private APIRequestContext apiRequest;
     private Browser browser;
@@ -158,7 +158,7 @@ public class StatusCodeCombinedTest {
             
         } catch (Exception e) {
             fail("UI проверка упала для кода " + code + ": " + e.getMessage());
-            return 0; // Этот код не выполнится из-за fail выше
+            return 0;
         }
     }
 
